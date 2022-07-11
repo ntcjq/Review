@@ -1,18 +1,14 @@
 package com.sea.review.service;
 
 import com.sea.review.bean.Member;
-import com.sea.review.dao.MemberRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
 @Service
-public class TxService {
+public class TxService extends AbsTxService {
 
-    @Autowired
-    private MemberRepository memberRepository;
 
     @Transactional
     public void tx() {
@@ -20,6 +16,6 @@ public class TxService {
         member.setUsername("cui");
         member.setRegTime(new Date());
         memberRepository.save(member);
-        System.out.println(1/0);
+        System.out.println(1 / 0);
     }
 }
