@@ -104,6 +104,13 @@
             <version>2.5.0</version>
         </dependency>
 
+        <!-- 中文繁体简体互转 https://github.com/houbb/opencc4j -->
+        <dependency>
+            <groupId>com.github.houbb</groupId>
+            <artifactId>opencc4j</artifactId>
+            <version>1.7.2</version>
+        </dependency>
+
     </dependencies>
 
     <build>
