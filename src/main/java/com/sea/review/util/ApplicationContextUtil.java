@@ -1,4 +1,4 @@
-package com.sea.review.controller;
+package com.sea.review.util;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
