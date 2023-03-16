@@ -6,11 +6,11 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/springboot?useSSL=false
     username: root
-    password: root
+    password: Cjq51729
 
   jpa:
     hibernate:
-      ddl-auto: none # 自动更新
+      ddl-auto: update # 自动更新
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl #更改默认命名策略
     show-sql: true  # 控制台打印SQl语句
