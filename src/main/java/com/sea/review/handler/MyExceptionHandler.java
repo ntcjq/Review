@@ -9,7 +9,8 @@ public class MyExceptionHandler {
 
     @ExceptionHandler()
     @ResponseBody
-    String handleException(Exception e){
+    String handleException(Exception e) {
+        e.printStackTrace();
         return "Exception Deal! " + e.getMessage();
     }
 }

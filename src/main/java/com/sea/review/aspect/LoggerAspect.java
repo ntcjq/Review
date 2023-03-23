@@ -70,11 +70,11 @@ public class LoggerAspect {
         // 获取方法传入参数
         Object[] params = joinPoint.getArgs();
         SeaLog seaLog = getDeclaredAnnotation(joinPoint);
-        System.out.println("==@Around Before== sea blog logger --》 method name: " + methodName + " ,args: " + params[0]);
+        System.out.println("==@Around Before== sea blog logger --》 method name: " + methodName + " ,args: " + (params.length > 0 ? params[0] : null));
         // 执行源方法
         Object proceed = joinPoint.proceed();
         // 模拟进行验证
-        System.out.println("==@Around After== sea blog logger --》 method name: " + methodName + " ,args: " + params[0]);
+        System.out.println("==@Around After== sea blog logger --》 method name: " + methodName);
         return proceed;
     }
 
