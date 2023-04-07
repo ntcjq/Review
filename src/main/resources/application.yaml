@@ -3,10 +3,8 @@ server:
 
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/springboot?useSSL=false
-    username: root
-    password: Cjq51729
+    driver-class-name: org.sqlite.JDBC
+    url: jdbc:sqlite::resource:db/test.db #相对位置
 
   jpa:
     hibernate:
@@ -14,10 +12,8 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl #更改默认命名策略
     show-sql: true  # 控制台打印SQl语句
+    database-platform: com.sea.review.config.SQLiteDialect
 
-  redis:
-    host: localhost
-    port: 6379
-    password: 123456
+
 
 
