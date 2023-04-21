@@ -15,3 +15,13 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl #更改默认命名策略
     show-sql: true  # 控制台打印SQl语句
 
+
+rocketmq:
+  name-server: 10.10.34.39:9876
+  producer:
+    group: my-group1
+    send-message-timeout: 300000
+  consumer:
+    group: my-group1
+    topic: spring-string
+
