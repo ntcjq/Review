@@ -19,9 +19,9 @@ spring:
 rocketmq:
   name-server: 10.10.34.39:9876
   producer:
-    group: my-group1
+    group: my-producer-group-1
     send-message-timeout: 300000
-  consumer:
-    group: my-group1
-    topic: spring-string
+#  consumer:
+#    group: my-group1
+#    topic: spring-string
 
