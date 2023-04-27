@@ -1,6 +1,5 @@
 package com.sea.review.service;
 
-import org.apache.commons.lang3.time.DateFormatUtils;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,58 +20,55 @@ public class LockService {
     private RedissonClient redissonClient;
 
     private static int money = 100;
-    private final String INCREMENT_LOCK = "test_lock_increment";
-    private final String DECREMENT_LOCK = "test_lock_decrement";
+    private final String MY_LOCK = "my_lock";
 
 
     public int increment(int amount) {
-        RLock lock = redissonClient.getLock(INCREMENT_LOCK);
+        RLock lock = redissonClient.getLock(MY_LOCK);
         try {
-            System.out.println(format.format(new Date()) + " increment 准备拿锁 参数:" + amount);
+            System.out.printf(format.format(new Date()) + " increment %s 准备拿锁%n", Thread.currentThread().getName());
             lock.lock(10, TimeUnit.SECONDS);
-            System.out.println(format.format(new Date()) + " increment 获得锁 参数:" + amount);
+            System.out.printf(format.format(new Date()) + " increment %s 获的锁%n", Thread.currentThread().getName());
             int temp = money + amount;
-            Thread.sleep(5000);
+            Thread.sleep(10);
             money = temp;
         } catch (Exception e) {
-            System.out.println(format.format(new Date()) + " 异常：" + e.toString());
+            System.out.printf(format.format(new Date()) + " increment %s 异常%n", Thread.currentThread().getName());
         } finally {
-            System.out.println(format.format(new Date()) + " islocked:" + lock.isLocked() + ", isHeldByCurrentThread:" + lock.isHeldByCurrentThread() + "参数:" + amount);
             if (lock.isLocked() && lock.isHeldByCurrentThread()) {
                 try {
-                    System.out.println(format.format(new Date()) + " increment 解锁 参数:" + amount);
                     lock.unlock();
+                    System.out.printf(format.format(new Date()) + " increment %s 解锁成功%n", Thread.currentThread().getName());
                 } catch (Exception e) {
-                    System.out.println(DateFormatUtils.format(new Date(), "yyyy-MM-dd hh:mm:ss") + "解锁失败" + amount);
+                    System.out.printf(format.format(new Date()) + " increment %s 解锁失败%n", Thread.currentThread().getName());
                 }
             }
         }
-        System.out.println(format.format(new Date()) + " 计算结束" + amount);
-        System.out.println(format.format(new Date()) + " islocked:" + lock.isLocked() + ", isHeldByCurrentThread:" + lock.isHeldByCurrentThread() + "参数:" + amount);
+        System.out.printf(format.format(new Date()) + " increment %s 计算结束 %s %n", Thread.currentThread().getName(), money);
         return money;
     }
 
     public int decrement(int amount) {
-        RLock lock = redissonClient.getLock(DECREMENT_LOCK);
+        RLock lock = redissonClient.getLock(MY_LOCK);
         try {
+            System.out.printf(format.format(new Date()) + " decrement %s 准备拿锁%n", Thread.currentThread().getName());
             // 尝试加锁，最多等待100秒，上锁以后10秒自动解锁
             boolean res = lock.tryLock(100, 10, TimeUnit.SECONDS);
             if (res) {
-                System.out.println("decrement 获得锁 参数:" + amount);
+                System.out.printf(format.format(new Date()) + " decrement %s 获得锁%n", Thread.currentThread().getName());
                 int temp = money - amount;
-                Thread.sleep(5000);
+                Thread.sleep(10);
                 money = temp;
             }
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.printf(format.format(new Date()) + " decrement %s 异常%n", Thread.currentThread().getName());
         } finally {
-            System.out.println(format.format(new Date()) + " islocked:" + lock.isLocked() + ", isHeldByCurrentThread:" + lock.isHeldByCurrentThread() + "参数:" + amount);
-            System.out.println("decrement 解锁 参数:" + amount);
-            if (lock.isLocked()) {
-                //判断是否是当前线程持有该锁
-                if (lock.isHeldByCurrentThread()) {
-                    lock.unlock();
-                }
+            //判断是否是当前线程持有该锁
+            try {
+                lock.unlock();
+                System.out.printf(format.format(new Date()) + " decrement %s 解锁成功%n", Thread.currentThread().getName());
+            } catch (Exception e) {
+                System.out.printf(format.format(new Date()) + " decrement %s 解锁失败%n", Thread.currentThread().getName());
             }
         }
         return money;

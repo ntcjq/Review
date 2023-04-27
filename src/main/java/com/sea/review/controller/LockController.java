@@ -7,16 +7,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.SimpleDateFormat;
+
 @RestController
 @RequestMapping("/lock")
 public class LockController {
-
+    private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
     @Autowired
     private LockService lockService;
 
     @GetMapping("increment")
     public int increment(int amount) {
-
         return lockService.increment(amount);
     }
 
