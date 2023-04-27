@@ -27,6 +27,7 @@ public class LockService {
         RLock lock = redissonClient.getLock(MY_LOCK);
         try {
             System.out.printf(format.format(new Date()) + " increment %s 准备拿锁%n", Thread.currentThread().getName());
+            //上锁以后10秒自动解锁
             lock.lock(10, TimeUnit.SECONDS);
             System.out.printf(format.format(new Date()) + " increment %s 获的锁%n", Thread.currentThread().getName());
             int temp = money + amount;
