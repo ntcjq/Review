@@ -55,9 +55,9 @@ public class LoggerAspect {
     /**
      * 异常通知：目标方法抛出异常时执行
      */
-    @AfterThrowing("cutMethod()")
-    public void afterThrowing() {
-        System.out.println("==@AfterThrowing== sea blog logger : after throwing");
+    @AfterThrowing(pointcut = "cutMethod()", throwing = "e")
+    public void afterThrowing(Throwable e) {
+        System.out.println("==@AfterThrowing== sea blog logger : after throwing, msg = " + e.getMessage());
     }
 
     /**
