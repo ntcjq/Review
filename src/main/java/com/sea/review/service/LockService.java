@@ -53,6 +53,10 @@ public class LockService {
         RLock lock = redissonClient.getLock(MY_LOCK);
         try {
             System.out.printf(format.format(new Date()) + " decrement %s 准备拿锁%n", Thread.currentThread().getName());
+//            //立即获取锁，获取到返true，没获取到返回false(适合秒杀或者过滤短时间内的重复请求)
+//            boolean res = lock.tryLock();
+//            //尝试加锁，最多等待100秒，获得锁后没有超时时间
+//            boolean res = lock.tryLock(100, TimeUnit.SECONDS);
             // 尝试加锁，最多等待100秒，上锁以后10秒自动解锁
             boolean res = lock.tryLock(100, 10, TimeUnit.SECONDS);
             if (res) {
@@ -60,16 +64,20 @@ public class LockService {
                 int temp = money - amount;
                 Thread.sleep(10);
                 money = temp;
+            } else {
+                System.out.printf(format.format(new Date()) + " decrement %s 不想等了，拜拜%n", Thread.currentThread().getName());
             }
         } catch (InterruptedException e) {
             System.out.printf(format.format(new Date()) + " decrement %s 异常%n", Thread.currentThread().getName());
         } finally {
             //判断是否是当前线程持有该锁
-            try {
-                lock.unlock();
-                System.out.printf(format.format(new Date()) + " decrement %s 解锁成功%n", Thread.currentThread().getName());
-            } catch (Exception e) {
-                System.out.printf(format.format(new Date()) + " decrement %s 解锁失败%n", Thread.currentThread().getName());
+            if (lock.isLocked() && lock.isHeldByCurrentThread()) {
+                try {
+                    lock.unlock();
+                    System.out.printf(format.format(new Date()) + " decrement %s 解锁成功%n", Thread.currentThread().getName());
+                } catch (Exception e) {
+                    System.out.printf(format.format(new Date()) + " decrement %s 解锁失败%n", Thread.currentThread().getName());
+                }
             }
         }
         return money;
