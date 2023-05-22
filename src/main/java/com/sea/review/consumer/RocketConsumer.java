@@ -1,18 +1,25 @@
 package com.sea.review.consumer;
 
 
-import org.apache.commons.lang3.time.DateFormatUtils;
+import com.sea.review.util.DateUtil;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-
+/**
+ * 普通消息消费者
+ */
 @Component
-@RocketMQMessageListener(consumerGroup = "my-consumer-group-1", topic = "topic-str")
+@RocketMQMessageListener(consumerGroup = "my-consumer-group-normal", topic = "topic_str")
 public class RocketConsumer implements RocketMQListener<String> {
     @Override
     public void onMessage(String s) {
-        System.out.printf("------%s,consume-group-1 message : %s %n", DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss"), s);
+        System.out.printf("------%s,%s,come consumer group normal %n", DateUtil.curDateFmt(), Thread.currentThread().getName());
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.printf("------%s,%s,come consumer group normal message:%s %n", DateUtil.curDateFmt(), Thread.currentThread().getName(), s);
     }
 }
