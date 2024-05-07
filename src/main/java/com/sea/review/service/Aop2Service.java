@@ -9,22 +9,19 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 
 @Service
-public class AopService {
+public class Aop2Service {
 
     @Autowired
     private MemberRepository memberRepository;
-    @Autowired
-    private Aop2Service aop2Service;
 
     @Transactional(rollbackFor = Exception.class)
     public void testAop() {
-
+        System.out.println("Aop2Service");
         Member member = new Member();
         member.setUsername("asasasaasasasaasasasaasasasaasasasaasasasaasasasaasasasa");
-        member.setEmail("asd");
+        member.setEmail("1111");
         member.setRegTime(new Date());
         memberRepository.save(member);
-        aop2Service.testAop();
         System.out.println("afterADD");
 
 

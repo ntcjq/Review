@@ -1,18 +1,21 @@
 package com.sea.review.controller;
 
 
-import com.sea.review.aspect.SeaLog;
+import com.sea.review.service.AopService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AopController {
 
+    @Autowired
+    private AopService aopService;
 
-    @SeaLog(module = "aop")
     @GetMapping("aop")
-    public String aop(String name) {
-        return name;
+    public String aop() {
+        aopService.testAop();
+        return "SUCCESS";
     }
 
 }

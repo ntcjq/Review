@@ -206,10 +206,10 @@ public class LoanInterestUtil {
         }
 
         public static void main(String[] args) {
-            BigDecimal payoutAmountB = new BigDecimal(300000);//借款总金额
-            BigDecimal monthRateB = new BigDecimal(3.25).divide(new BigDecimal(12 * 100), 12, BigDecimal.ROUND_HALF_UP);//月利率
+            BigDecimal payoutAmountB = new BigDecimal(250000);//借款总金额
+            BigDecimal monthRateB = new BigDecimal(3.10).divide(new BigDecimal(12*100), 12, BigDecimal.ROUND_HALF_UP);//月利率
             Integer loanTerm = 12 * 15;
-            averageCapital(loanTerm, payoutAmountB, monthRateB);
+            averageCapitalPlusInterest(loanTerm, payoutAmountB, monthRateB);
 
         }
     }

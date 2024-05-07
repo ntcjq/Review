@@ -2,13 +2,17 @@ package com.sea.review.aspect;
 
 
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 
 @Aspect
+@Order(0)
 @Component
 public class LoggerAspect {
 
@@ -28,37 +32,37 @@ public class LoggerAspect {
 
     }
 
-    /**
-     * 前置通知：在目标方法执行前调用
-     */
-    @Before("cutMethod()")
-    public void begin() {
-        System.out.println("==@Before== sea blog logger : begin");
-    }
-
-    /**
-     * 后置通知：在目标方法执行后调用，若目标方法出现异常，则不执行
-     */
-    @AfterReturning("cutMethod()")
-    public void afterReturning() {
-        System.out.println("==@AfterReturning== sea blog logger : after returning");
-    }
-
-    /**
-     * 后置/最终通知：无论目标方法在执行过程中是否出现异常，都会执行
-     */
-    @After("cutMethod()")
-    public void after() {
-        System.out.println("==@After== sea blog logger : finally returning");
-    }
-
-    /**
-     * 异常通知：目标方法抛出异常时执行
-     */
-    @AfterThrowing(pointcut = "cutMethod()", throwing = "e")
-    public void afterThrowing(Throwable e) {
-        System.out.println("==@AfterThrowing== sea blog logger : after throwing, msg = " + e.getMessage());
-    }
+//    /**
+//     * 前置通知：在目标方法执行前调用
+//     */
+//    @Before("cutMethod()")
+//    public void begin() {
+//        System.out.println("==@Before== sea blog logger : begin");
+//    }
+//
+//    /**
+//     * 后置通知：在目标方法执行后调用，若目标方法出现异常，则不执行
+//     */
+//    @AfterReturning("cutMethod()")
+//    public void afterReturning() {
+//        System.out.println("==@AfterReturning== sea blog logger : after returning");
+//    }
+//
+//    /**
+//     * 后置/最终通知：无论目标方法在执行过程中是否出现异常，都会执行
+//     */
+//    @After("cutMethod()")
+//    public void after() {
+//        System.out.println("==@After== sea blog logger : finally returning");
+//    }
+//
+//    /**
+//     * 异常通知：目标方法抛出异常时执行
+//     */
+//    @AfterThrowing(pointcut = "cutMethod()", throwing = "e")
+//    public void afterThrowing(Throwable e) {
+//        System.out.println("==@AfterThrowing== sea blog logger : after throwing, msg = " + e.getMessage());
+//    }
 
     /**
      * 环绕通知：灵活自由的在目标方法中切入代码
@@ -72,7 +76,12 @@ public class LoggerAspect {
         SeaLog seaLog = getDeclaredAnnotation(joinPoint);
         System.out.println("==@Around Before== sea blog logger --》 method name: " + methodName + " ,args: " + (params.length > 0 ? params[0] : null));
         // 执行源方法
-        Object proceed = joinPoint.proceed();
+        Object proceed = null;
+        try {
+            proceed = joinPoint.proceed();
+        } catch (Exception e) {
+            System.out.println("error");
+        }
         // 模拟进行验证
         System.out.println("==@Around After== sea blog logger --》 method name: " + methodName);
         return proceed;

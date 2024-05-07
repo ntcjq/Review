@@ -97,6 +97,19 @@
             <version>5.8.6</version>
         </dependency>
 
+        <!-- 生成二维码核心组件 -->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.4.1</version>
+        </dependency>
+        <!-- 非web应用无需导入javase依赖包 -->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>javase</artifactId>
+            <version>3.4.1</version>
+        </dependency>
+
         <!-- 第三方拼音依赖包，配合 hutool-all 包中的 PinyinUtil 拼音工具使用 -->
         <dependency>
             <groupId>com.belerweb</groupId>
@@ -110,6 +123,52 @@
             <artifactId>opencc4j</artifactId>
             <version>1.7.2</version>
         </dependency>
+
+        <!-- JWT -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>3.10.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+        </dependency>
+
+        <!-- 音频格式转MP3 -->
+        <dependency>
+            <groupId>ws.schild</groupId>
+            <artifactId>jave-core</artifactId>
+            <version>3.4.0</version>
+        </dependency>
+
+        <!-- Linux 环境 -->
+        <!--        <dependency>-->
+        <!--            <groupId>ws.schild</groupId>-->
+        <!--            <artifactId>jave-nativebin-linux64</artifactId>-->
+        <!--            <version>3.4.0</version>-->
+        <!--        </dependency>-->
+
+        <!-- MacOS 环境 -->
+        <dependency>
+            <groupId>ws.schild</groupId>
+            <artifactId>jave-nativebin-osx64</artifactId>
+            <version>3.4.0</version>
+        </dependency>
+
+        <!-- Win64 环境 -->
+        <!--        <dependency>-->
+        <!--            <groupId>ws.schild</groupId>-->
+        <!--            <artifactId>jave-nativebin-win64</artifactId>-->
+        <!--            <version>3.4.0</version>-->
+        <!--        </dependency>-->
 
     </dependencies>
 
