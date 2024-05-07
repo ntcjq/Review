@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSON;
 import com.sea.review.bean.Person;
 import com.sea.review.service.ExposeService;
 import com.sea.review.service.TestService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import java.net.URLEncoder;
 import java.util.Date;
 import java.util.Set;
 
+@Slf4j
 @RestController
 public class TestController {
 
@@ -30,7 +32,7 @@ public class TestController {
 
     @GetMapping("test")
     public String test(String name) {
-        System.out.println("==enter test");
+        log.info("enter test");
         testService.testNo();
         Person person = new Person();
         person.setName("cjq");
@@ -42,7 +44,7 @@ public class TestController {
     @PostMapping("json")
     public String test(@RequestBody Person person) {
         Set<String> set = person.getSet();
-        System.out.println(JSON.toJSONString(set));
+        log.info("test json {}", JSON.toJSONString(set));
         return JSON.toJSONString(person);
     }
 

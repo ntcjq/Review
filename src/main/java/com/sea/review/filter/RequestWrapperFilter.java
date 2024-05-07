@@ -10,8 +10,8 @@ import java.io.IOException;
 
 
 @Component
-@WebFilter(urlPatterns = "/*", filterName = "myFilter")
-public class MyFilter implements Filter {
+@WebFilter(urlPatterns = "/*", filterName = "requestWrapperFilter")
+public class RequestWrapperFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
