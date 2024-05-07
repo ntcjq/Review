@@ -3,11 +3,15 @@ package com.sea.review.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.sea.review.bean.Person;
+import com.sea.review.service.ExposeService;
 import com.sea.review.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -21,6 +25,8 @@ public class TestController {
 
     @Autowired
     private TestService testService;
+    @Autowired
+    private ExposeService exposeService;
 
     @GetMapping("test")
     public String test(String name) {
@@ -46,6 +52,12 @@ public class TestController {
     }
 
 
+    @GetMapping("expose")
+    public String expose() {
+        exposeService.exposeOne();
+        exposeService.exposeTwo();
+        return "Success";
+    }
 
     /**
      * 下载导入模版
@@ -61,6 +73,7 @@ public class TestController {
     }
 
     public static String RESOURCE_PATH = "/template/";
+
     private ResponseEntity<byte[]> getBytesFromFile(String fileName) throws IOException {
         InputStream inputStream = this.getClass().getResourceAsStream(RESOURCE_PATH + fileName);
         ResponseEntity.BodyBuilder builder = ResponseEntity.ok();
